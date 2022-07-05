@@ -3,7 +3,6 @@ import unittest
 
 from gilded_rose import Item, GildedRose
 
-
 class GildedRoseTest(unittest.TestCase):
 
     def test_normal_qual(self):
@@ -19,6 +18,13 @@ class GildedRoseTest(unittest.TestCase):
         inventory = GildedRose(items)
         inventory.update_quality()
         self.assertEqual(inventory.items[0].quality, 28)
+
+    def test_positive_normal_qual(self):
+        """an item cannot have a negative quality"""
+        items = [Item("Normal Item", -5, 0)]
+        inventory = GildedRose(items)
+        inventory.update_quality()
+        self.assertEqual(inventory.items[0].quality, 0)
 
     def test_normal_sellin(self):
         """the sell_in for a normal item decreases by 1 each day"""
@@ -103,6 +109,34 @@ class GildedRoseTest(unittest.TestCase):
         inventory = GildedRose(items)
         inventory.update_quality()
         self.assertEqual(inventory.items[0].sell_in, -1)
+
+    def test_conjured_qual(self):
+        """a conjured item loses quality each day until the sell by date, at twice the rate of a normal item"""
+        items = [Item("Conjured Item", 5, 30)]
+        inventory = GildedRose(items)
+        inventory.update_quality()
+        self.assertEqual(inventory.items[0].quality, 28)
+
+    def test_conjured_doublequal(self):
+        """a conjured item loses quality twice as fast after its sell by date"""
+        items = [Item("Conjured Item", -5, 30)]
+        inventory = GildedRose(items)
+        inventory.update_quality()
+        self.assertEqual(inventory.items[0].quality, 26)
+
+    def test_positive_conjured_qual(self):
+        """a conjured item cannot have a negative quality"""
+        items = [Item("Conjured Item", -5, 0)]
+        inventory = GildedRose(items)
+        inventory.update_quality()
+        self.assertEqual(inventory.items[0].quality, 0)
+
+    def test_conjured_sellin(self):
+        """the sell_in for a conjured item decreases by 1 each day"""
+        items = [Item("Conjured Item", 7, 30)]
+        inventory = GildedRose(items)
+        inventory.update_quality()
+        self.assertEqual(inventory.items[0].sell_in, 6)
 
 
 if __name__ == '__main__':
