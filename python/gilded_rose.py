@@ -25,7 +25,7 @@ class GildedRose(object):
     @classmethod
     def get_item_type(cls, item):
         for inv in cls.inventory_types:
-            if item.name.startswith(inv):
+            if item.name.casefold().startswith(inv.casefold()):
                 return cls.inventory_types[inv]
         return NormalItem
 

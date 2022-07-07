@@ -1,4 +1,3 @@
-from mimetypes import init
 from inventory_types.normal import NormalItem    #type: ignore
 
 class Brie(NormalItem):
