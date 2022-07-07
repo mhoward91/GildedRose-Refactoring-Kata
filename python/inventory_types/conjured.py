@@ -5,8 +5,6 @@ class ConjuredItem(NormalItem):
     @staticmethod
     def update_quality(item):
         if item.sell_in > 0:
-            if item.quality >= 2:
-                item.quality -= 2
+            ConjuredItem.quality_decrease(item, 2)
         else:
-            if item.quality >= 4: 
-                item.quality -= 4
+            ConjuredItem.quality_decrease(item, 4)

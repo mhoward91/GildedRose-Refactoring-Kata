@@ -7,18 +7,9 @@ class BackstagePass(NormalItem):
         if item.sell_in <= 0:
             item.quality = 0
         else:
-            increase = BackstagePass.qual_increase(item)
-            if item.quality + increase <= NormalItem.MAX_QUAL:
-                item.quality += increase
+            if item.sell_in <= 5:
+                BackstagePass.quality_increase(item, 3)
+            elif item.sell_in <= 10:
+                BackstagePass.quality_increase(item, 2)
             else:
-                item.quality = NormalItem.MAX_QUAL
-
-    @staticmethod
-    def qual_increase(item):
-        if item.sell_in <= 5:
-            return 3
-        if item.sell_in <= 10:
-            return 2
-        else:
-            return 1
-
+                BackstagePass.quality_increase(item, 1)

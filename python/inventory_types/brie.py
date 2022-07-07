@@ -1,7 +1,8 @@
+from mimetypes import init
 from inventory_types.normal import NormalItem    #type: ignore
 
 class Brie(NormalItem):
     
+    @staticmethod
     def update_quality(item):
-        if item.quality < NormalItem.MAX_QUAL:
-            item.quality += 1
+        Brie.quality_increase(item, 1)
