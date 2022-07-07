@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 import unittest
 
-from gilded_rose import Item, GildedRose
+from gilded_rose import Item, GildedRose #type: ignore
 
 class GildedRoseTest(unittest.TestCase):
 
@@ -14,7 +13,7 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_normal_doublequal(self):
         """a normal item loses quality twice as fast after the sell by date"""
-        items = [Item("Normal Item", -5, 30)]
+        items = [Item("Any other string", -5, 30)]
         inventory = GildedRose(items)
         inventory.update_quality()
         self.assertEqual(inventory.items[0].quality, 28)

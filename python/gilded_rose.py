@@ -1,15 +1,33 @@
 from inventory_types.normal import NormalItem   # type: ignore
+from inventory_types.brie import Brie   # type: ignore  
+from inventory_types.sulfuras import Sulfuras   # type: ignore
+from inventory_types.backstage import BackstagePass # type: ignore
+from inventory_types.conjured import ConjuredItem   # type: ignore
 
 class GildedRose(object):
+
+    inventory_types = {
+        "Aged Brie": Brie,
+        "Sulfuras": Sulfuras,
+        "Backstage": BackstagePass,
+        "Conjured": ConjuredItem
+    }
 
     def __init__(self, items):
         self.items = items
 
     def update_quality(self):
         for item in self.items:
-            item_type = NormalItem  # TODO make item type variable according to Item.name attribute
+            item_type = GildedRose.get_item_type(item)
             item_type.update_quality(item)
             item_type.update_sell_in(item)
+
+    @classmethod
+    def get_item_type(cls, item):
+        for inv in GildedRose.inventory_types:
+            if item.name.startswith(inv):
+                return GildedRose.inventory_types[inv]
+        return NormalItem
 
 
 class Item:
